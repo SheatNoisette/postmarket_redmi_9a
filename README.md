@@ -5,8 +5,7 @@ Redmi 9a smartphone. This phone can be bought for less than 70€ and is a good
 candidate for a cheap Linux phone, that's why I'm **trying** to port
 PostmarketOS to it.
 
-Please note this is a work in progress and may not be complete!
----
+**Please note this is a work in progress and may not be complete!**
 
 This project may be abandoned at any time, I'm not sure I'll be able to
 complete it.
