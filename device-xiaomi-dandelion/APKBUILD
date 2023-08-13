@@ -23,4 +23,6 @@ package() {
 	devicepkg_package $startdir $pkgname
 }
 
-sha512sums="(run 'pmbootstrap checksum device-xiaomi-dandelion' to fill)"
+sha512sums="
+d6e157b3acae4761f993b74118be87dced2f9d8e99b762d01e22983b9331c85bdee940da4e2d28d28f112477e73b7c8603b556174276cc5187bcff3106202fd0  deviceinfo
+"
