@@ -18,18 +18,42 @@ results of my research on the phone hardware.
 
 ## Unlocking the bootloader
 
+Sadly, Xiaomi phones have a locked bootloader by default and can't be unlocked
+with fastboot or using the developer settings.
+
+There are two ways to unlock the bootloader for this phone:
+- Mi Unlock Tool
+- mtkclient (unofficial)
+
+### Official method
+
 Use the offical [Mi Unlock Tool](https://en.miui.com/unlock/) to unlock the
 bootloader (Xiaomi account required). You will have to wait one week before
 being able to unlock the bootloader (?!).
 
+### mtkclient method
+
 If you can't wait one week to unlock the bootloader, you can use the mtkclient
 software to unlock the bootloader:
 ```
-# Plug the phone in preloader mode
+# Plug the phone in preloader mode (hold volume up + volume down + power)
+# The screen should be black
 $ python mtk e metadata,userdata,md_udc
 $ python mtk da seccfg unlock
 $ python mtk reset
 ```
+
+Using this method, you get a dm-verity error on boot as follows:
+```
+dm-verity corruption
+
+Your device is corrupt.
+It can't be trusted and may not work properly.
+Press power button to continue.
+Or, device will power off in 5s
+```
+Press the power button to continue booting, you will get a unlocked lock logo on
+the top of the screen, and the phone will boot normally.
 
 ## Kernel sources
 
