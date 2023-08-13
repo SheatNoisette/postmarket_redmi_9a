@@ -8,6 +8,8 @@ PostmarketOS to it.
 Please note this is a work in progress and may not be complete!
 ---
 
+This project may be abandoned at any time, I'm not sure I'll be able to
+complete it.
 
 ## Technical research
 
