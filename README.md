@@ -37,6 +37,37 @@ The kernel sources are available on the Xiaomi Kernel OpenSource Github page,
 but I've made a mirror of the sources on this repository for convenience
 (here)[https://github.com/SheatNoisette/linux-xiaomi-dandelion]
 
+## Todo
+
+This is a list of things that need to be done to get a bare minimum working
+postmarketOS port:
+- [x] Unlock bootloader
+- [X] Dump partitions
+- [X] Dump boot.img
+- [X] Get offsets for boot.img
+- [ ] Build a kernel
+- [ ] Get a kernel Booting with proof of booting (UART, led flashing, etc)
+- [ ] Get the screen working (pmOS error rootfs not found)
+- [ ] Load the rootfs
+- [ ] Untethered booting (eMMC boot / SD card boot)
+
+Additional things that need to be done to get a usable postmarketOS port:
+- [ ] Touchscreen
+- [ ] Sensors
+- [ ] Sound
+- [ ] Buttons
+- [ ] Battery status
+
+Some things that would be nice to have but would require a ton of work and may
+not be possible (This depends on the state of the kernel sources):
+- [ ] Sleep/Wake
+- [ ] Get CPUfreq/cpu scaling working
+- [ ] Get the modem (Bluetooth + WiFi + Cellular) working
+- [ ] Get the GPS working
+- [ ] Get the camera working
+- [ ] GPU acceleration ([PowerVR Rogue DRM driver](https://lore.kernel.org/all/20220815165156.118212-2-sarah.walker@imgtec.com/) / Mesa)
+- [ ] Mainline kernel port
+
 ## Flashing PostmarketOS
 
 @TODO
