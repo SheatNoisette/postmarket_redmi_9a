@@ -61,9 +61,18 @@ Others:
 
 ## Software Out-Of-The-Box
 
+Before messing with the phone, I made a backup of the system partition using
+mtkclient. This will be useful if something goes wrong.
+
+Everything presented here is from the stock ROM in the EU version of the phone
+without any updates (Out-Of-The-Box).
+This may not be the same for other versions released in other countries.
 
 ### Android reported
 
+The phone is running Android 11, which is quite slow (but it's Android, so it's).
+
+Some data from the phone:
 - Android 11 (RP1A.200720.011)
     - Android ID: 13676d16cfe1d57d
 - MIUI Global 12.5.5 Stable (V125)
@@ -73,13 +82,13 @@ Others:
 
 ### boot.img
 
-Reported by `file`:
+Reported by `file` on Linux:
 ```
-boot.bin: Android bootimg, kernel (0x40080000), ramdisk (0x51b00000), 
+boot.bin: Android bootimg, kernel (0x40080000), ramdisk (0x51b00000),
 page size: 2048, cmdline (bootopt=64S3,32N2,64N2 buildvariant=user)
 ```
 
-pmbootstrap Offsets:
+pmbootstrap generated offset from the boot.img:
 ```
 deviceinfo_kernel_cmdline="bootopt=64S3,32N2,64N2 buildvariant=user"
 deviceinfo_generate_bootimg="true"
@@ -123,12 +132,19 @@ Sha256sum:
 
 ### Preloader / lk.bin
 
+lk.bin is the preloader, which is the first thing that runs on the phone,
+because the security on the Mediatek SoC is complete garbage, I was able to
+dump it using mtkclient.
+
 sha256sum:
 ```
 a2fe9a4bd5f0644270187ba6b3daa8a0d2a7ab1612b49ab6dac989297d080d23  preloader.bin
 ```
 
 ### GPT Table
+
+After dumping the preloader, I was able to dump the GPT table, which is
+interesting because it contains the partition layout of the phone.
 
 Dumped using mtkclient:
 ```
