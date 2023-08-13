@@ -1,0 +1,201 @@
+From 137772cfa4fa9c189346f30c715ed3d440c8b37d Mon Sep 17 00:00:00 2001
+From: SheatNoisette <sheatnoisette@protonmail.com>
+Date: Sun, 13 Aug 2023 18:11:18 +0200
+Subject: [PATCH 3/5] drvgen: Add cmp function
+
+---
+ tools/dct/DrvGen.py         | 1 +
+ tools/dct/obj/AdcObj.py     | 2 +-
+ tools/dct/obj/ChipObj.py    | 1 +
+ tools/dct/obj/ClkObj.py     | 1 +
+ tools/dct/obj/EintObj.py    | 1 +
+ tools/dct/obj/GpioObj.py    | 3 ++-
+ tools/dct/obj/I2cObj.py     | 3 ++-
+ tools/dct/obj/KpdObj.py     | 1 +
+ tools/dct/obj/Md1EintObj.py | 3 ++-
+ tools/dct/obj/ModuleObj.py  | 1 +
+ tools/dct/obj/PmicObj.py    | 1 +
+ tools/dct/obj/PowerObj.py   | 1 +
+ tools/dct/utility/util.py   | 3 ++-
+ 13 files changed, 17 insertions(+), 5 deletions(-)
+
+diff --git a/tools/dct/DrvGen.py b/tools/dct/DrvGen.py
+index 40150c65c..1e1a5b3d4 100755
+--- a/tools/dct/DrvGen.py
++++ b/tools/dct/DrvGen.py
+@@ -41,6 +41,7 @@ from obj.ChipObj import MT6779
+ 
+ from utility.util import LogLevel
+ from utility.util import log
++from utility.util import cmp
+ 
+ def usage():
+     print('''
+diff --git a/tools/dct/obj/AdcObj.py b/tools/dct/obj/AdcObj.py
+index ebbc4c4eb..9ddd1b95a 100755
+--- a/tools/dct/obj/AdcObj.py
++++ b/tools/dct/obj/AdcObj.py
+@@ -21,7 +21,7 @@ from obj.ModuleObj import ModuleObj
+ from utility.util import log
+ from utility.util import LogLevel
+ from utility.util import sorted_key
+-
++from utility.util import cmp
+ 
+ class AdcObj(ModuleObj):
+     def __init__(self):
+diff --git a/tools/dct/obj/ChipObj.py b/tools/dct/obj/ChipObj.py
+index 2098fbeac..95aa2ba43 100755
+--- a/tools/dct/obj/ChipObj.py
++++ b/tools/dct/obj/ChipObj.py
+@@ -44,6 +44,7 @@ from .ModuleObj import ModuleObj
+ 
+ from utility.util import log
+ from utility.util import LogLevel
++from utility.util import cmp
+ 
+ para_map = {'adc':['adc_h', 'adc_dtsi'],\
+             'clk':['clk_buf_h', 'clk_buf_dtsi'],\
+diff --git a/tools/dct/obj/ClkObj.py b/tools/dct/obj/ClkObj.py
+index 779d407a1..f1c1000bf 100755
+--- a/tools/dct/obj/ClkObj.py
++++ b/tools/dct/obj/ClkObj.py
+@@ -25,6 +25,7 @@ from data.ClkData import NewClkData
+ from utility.util import log
+ from utility.util import LogLevel
+ from utility.util import sorted_key
++from utility.util import cmp
+ 
+ DEFAULT_AUTOK = 'AutoK'
+ class ClkObj(ModuleObj):
+diff --git a/tools/dct/obj/EintObj.py b/tools/dct/obj/EintObj.py
+index 4631a6d89..039199bde 100755
+--- a/tools/dct/obj/EintObj.py
++++ b/tools/dct/obj/EintObj.py
+@@ -24,6 +24,7 @@ from data.GpioData import GpioData
+ from utility.util import log
+ from utility.util import LogLevel
+ from utility.util import compare
++from utility.util import cmp
+ 
+ from obj.ModuleObj import ModuleObj
+ from obj.GpioObj import GpioObj
+diff --git a/tools/dct/obj/GpioObj.py b/tools/dct/obj/GpioObj.py
+index dd19ce391..8279114c6 100755
+--- a/tools/dct/obj/GpioObj.py
++++ b/tools/dct/obj/GpioObj.py
+@@ -28,6 +28,7 @@ from utility.util import compare
+ from utility.util import sorted_key
+ from utility.util import log
+ from utility.util import LogLevel
++from utility.util import cmp
+ 
+ class GpioObj(ModuleObj):
+     def __init__(self):
+@@ -761,4 +762,4 @@ class GpioObj_MT6763(GpioObj_MT6759):
+         gen_str = gen_str[0: len(gen_str) - 4]
+         gen_str += ';'
+         gen_str += '''\n};\n'''
+-        return gen_str
+\ No newline at end of file
++        return gen_str
+diff --git a/tools/dct/obj/I2cObj.py b/tools/dct/obj/I2cObj.py
+index 351b75099..a2eaa754b 100755
+--- a/tools/dct/obj/I2cObj.py
++++ b/tools/dct/obj/I2cObj.py
+@@ -20,6 +20,7 @@ import configparser
+ from .ModuleObj import ModuleObj
+ #from utility import util
+ from utility.util import sorted_key
++from utility.util import cmp
+ from data.I2cData import I2cData
+ from data.I2cData import BusData
+ from . import ChipObj
+@@ -237,4 +238,4 @@ class I2cObj_MT6775(I2cObj):
+ 
+             gen_str += '''};\n\n'''
+ 
+-        return gen_str
+\ No newline at end of file
++        return gen_str
+diff --git a/tools/dct/obj/KpdObj.py b/tools/dct/obj/KpdObj.py
+index 31b285e57..0c4e50629 100755
+--- a/tools/dct/obj/KpdObj.py
++++ b/tools/dct/obj/KpdObj.py
+@@ -20,6 +20,7 @@ import xml.dom.minidom
+ from .ModuleObj import ModuleObj
+ from utility.util import LogLevel
+ from utility.util import log
++from utility.util import cmp
+ from data.KpdData import KpdData
+ 
+ class KpdObj(ModuleObj):
+diff --git a/tools/dct/obj/Md1EintObj.py b/tools/dct/obj/Md1EintObj.py
+index cce141f18..a8dc87a95 100755
+--- a/tools/dct/obj/Md1EintObj.py
++++ b/tools/dct/obj/Md1EintObj.py
+@@ -23,6 +23,7 @@ from utility.util import sorted_key
+ from .ModuleObj import ModuleObj
+ from data.Md1EintData import Md1EintData
+ from utility.util import LogLevel
++from utility.util import cmp
+ 
+ class Md1EintObj(ModuleObj):
+     def __init__(self):
+@@ -238,4 +239,4 @@ class Md1EintObj_MT6739(Md1EintObj):
+ 
+             gen_str += '''\n'''
+ 
+-        return gen_str
+\ No newline at end of file
++        return gen_str
+diff --git a/tools/dct/obj/ModuleObj.py b/tools/dct/obj/ModuleObj.py
+index 687e26f05..952dc518b 100755
+--- a/tools/dct/obj/ModuleObj.py
++++ b/tools/dct/obj/ModuleObj.py
+@@ -20,6 +20,7 @@ import string
+ from utility import version
+ from utility.util import log
+ from utility.util import LogLevel
++from utility.util import cmp
+ 
+ class ModuleObj:
+     _chip_id = ''
+diff --git a/tools/dct/obj/PmicObj.py b/tools/dct/obj/PmicObj.py
+index d9753aa65..860033d7f 100755
+--- a/tools/dct/obj/PmicObj.py
++++ b/tools/dct/obj/PmicObj.py
+@@ -24,6 +24,7 @@ from utility.util import log
+ from utility.util import LogLevel
+ from utility.util import compare
+ from utility.util import sorted_key
++from utility.util import cmp
+ 
+ 
+ class PmicObj(ModuleObj):
+diff --git a/tools/dct/obj/PowerObj.py b/tools/dct/obj/PowerObj.py
+index 31e194f00..87246b718 100755
+--- a/tools/dct/obj/PowerObj.py
++++ b/tools/dct/obj/PowerObj.py
+@@ -23,6 +23,7 @@ from data.PowerData import PowerData
+ from utility.util import log
+ from utility.util import LogLevel
+ from utility.util import sorted_key
++from utility.util import cmp
+ from .ModuleObj import ModuleObj
+ 
+ class PowerObj(ModuleObj):
+diff --git a/tools/dct/utility/util.py b/tools/dct/utility/util.py
+index bf8a57c49..ff8bad8e2 100755
+--- a/tools/dct/utility/util.py
++++ b/tools/dct/utility/util.py
+@@ -44,4 +44,5 @@ def compare(value):
+ def sorted_key(lst):
+     return sorted(lst, key=compare)
+ 
+-
++def cmp(a, b):
++    return 0 if a == b else 1
+-- 
+2.41.0
+

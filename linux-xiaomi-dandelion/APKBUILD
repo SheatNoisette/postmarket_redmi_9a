@@ -20,6 +20,7 @@ makedepends="
 	flex
 	openssl-dev
 	perl
+	python3
 "
 
 # Source
@@ -29,6 +30,11 @@ _config="config-$_flavor.$arch"
 source="
 	$pkgname-$_commit.tar.gz::https://github.com/SheatNoisette/$_repository/archive/$_commit.tar.gz
 	$_config
+	0001-drvgen-Upgrade-to-Python3.patch
+	0002-drvgen-Upgrade-components-to-Python-3.patch
+	0003-drvgen-Add-cmp-function.patch
+	0004-drvgen-Remplace-string.atoi-to-int-fnc.patch
+	0005-drvgen-Rename-list-variables-for-py3.patch
 "
 builddir="$srcdir/$_repository-$_commit"
 _outdir="out"
@@ -52,4 +58,9 @@ package() {
 sha512sums="
 d1180f0be8111fba40030b5cae104d5ba60cd49408276bdb9bce3594e8cae5151fa6e90861068d6abbe0b6392514a99f0ac578aff8bdf69d02445e278b663f43  linux-xiaomi-dandelion-8974b9164af90d94603900b229264ae879a83a83.tar.gz
 722f3d1ee4d879895135e7c755e027c5f7fbcb0512a9d3f08e01173064a7880c3a67a6154082227fb5eff475233830ba8627e4b18c42dfda6fdfffeb0f55b836  config-xiaomi-dandelion.aarch64
+8d2d30e1ac8de574585302f42355fef060bd76ee8c4b5acdcd49c330b59570e6da26b812ac7634129c98474a581b0df5681e1ce9323d0ca5bb9924481f56266d  0001-drvgen-Upgrade-to-Python3.patch
+e2d8a859693e33ba80c423801d6c2bf2eba1cfd4ac3dd9b6a55218e31b938c2892f1cacf0052be00c9ace8090e9563998e95abd9cd949e3afc578958c39f02b2  0002-drvgen-Upgrade-components-to-Python-3.patch
+dc3a9ce3cbb04f03c99bf1debcc454c336efffde9d14194ab4d85fda780efb3649bab8429a4c3b9b0a2c90947d688cc5b5e8589d8e1e0fc8b60a34508af7a0f7  0003-drvgen-Add-cmp-function.patch
+736e6bd90a415fa6688187563dd34e98ef651acbfb2ddaba9a58be26adb43a3a73230354dc15f68251c6609c5ffd7754f10acb73a1cf00ab530b851159d30ba8  0004-drvgen-Remplace-string.atoi-to-int-fnc.patch
+4df44ac310521e5fd177edb1603ade3712f3b99f2a905c249828dc736fcff25a541d037d7e4c6a23bb63de00d965ccb4439d75ac35bc6cd0599b89f45502560a  0005-drvgen-Rename-list-variables-for-py3.patch
 "

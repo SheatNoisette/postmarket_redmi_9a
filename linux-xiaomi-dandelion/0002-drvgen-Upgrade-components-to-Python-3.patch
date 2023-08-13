@@ -1,0 +1,1071 @@
+From c22ccf98897a3992ef75213ec6179ecf5a3dae5c Mon Sep 17 00:00:00 2001
+From: SheatNoisette <sheatnoisette@protonmail.com>
+Date: Sun, 13 Aug 2023 17:59:30 +0200
+Subject: [PATCH 2/5] drvgen: Upgrade components to Python 3
+
+---
+ tools/dct/data/EintData.py  |  6 ++--
+ tools/dct/data/GpioData.py  |  2 +-
+ tools/dct/data/KpdData.py   |  2 +-
+ tools/dct/obj/AdcObj.py     |  2 +-
+ tools/dct/obj/ChipObj.py    | 64 ++++++++++++++++++-------------------
+ tools/dct/obj/ClkObj.py     | 58 ++++++++++++++++-----------------
+ tools/dct/obj/EintObj.py    | 26 +++++++--------
+ tools/dct/obj/GpioObj.py    | 38 +++++++++++-----------
+ tools/dct/obj/I2cObj.py     | 16 +++++-----
+ tools/dct/obj/KpdObj.py     | 10 +++---
+ tools/dct/obj/Md1EintObj.py | 14 ++++----
+ tools/dct/obj/PmicObj.py    | 22 ++++++-------
+ tools/dct/obj/PowerObj.py   | 10 +++---
+ tools/dct/utility/util.py   |  6 ++--
+ 14 files changed, 138 insertions(+), 138 deletions(-)
+
+diff --git a/tools/dct/data/EintData.py b/tools/dct/data/EintData.py
+index 53d981476..3b5184f92 100755
+--- a/tools/dct/data/EintData.py
++++ b/tools/dct/data/EintData.py
+@@ -73,7 +73,7 @@ class EintData:
+     def get_modeName(gpio_num, mode_idx):
+         key = 'gpio%s' %(gpio_num)
+ 
+-        if key in EintData._mode_map.keys():
++        if key in list(EintData._mode_map.keys()):
+             list =  EintData._mode_map[key]
+             if mode_idx < len(list) and mode_idx >= 0:
+                 return list[mode_idx]
+@@ -82,7 +82,7 @@ class EintData:
+ 
+     @staticmethod
+     def set_modeMap(map):
+-        for (key, value) in map.items():
++        for (key, value) in list(map.items()):
+             list = []
+             for item in value:
+                 list.append(item[6:len(item)-1])
+@@ -97,7 +97,7 @@ class EintData:
+     @staticmethod
+     def get_gpioNum(num):
+         if len(EintData._map_table):
+-            for (key,value) in EintData._map_table.items():
++            for (key,value) in list(EintData._map_table.items()):
+                 if num == value:
+                     return key
+ 
+diff --git a/tools/dct/data/GpioData.py b/tools/dct/data/GpioData.py
+index 8363318bc..2e9492966 100755
+--- a/tools/dct/data/GpioData.py
++++ b/tools/dct/data/GpioData.py
+@@ -136,7 +136,7 @@ class GpioData:
+ 
+     @staticmethod
+     def get_modeName(key, idx):
+-        if key in GpioData._modeMap.keys():
++        if key in list(GpioData._modeMap.keys()):
+             value = GpioData._modeMap[key]
+             return value[idx]
+ 
+diff --git a/tools/dct/data/KpdData.py b/tools/dct/data/KpdData.py
+index e0f4c989e..3b0dbc963 100755
+--- a/tools/dct/data/KpdData.py
++++ b/tools/dct/data/KpdData.py
+@@ -152,7 +152,7 @@ class KpdData:
+ 
+     @staticmethod
+     def get_keyVal(key):
+-        if key in KpdData._keyValueMap.keys():
++        if key in list(KpdData._keyValueMap.keys()):
+             return KpdData._keyValueMap[key]
+ 
+         return 0
+diff --git a/tools/dct/obj/AdcObj.py b/tools/dct/obj/AdcObj.py
+index f9820275d..ebbc4c4eb 100755
+--- a/tools/dct/obj/AdcObj.py
++++ b/tools/dct/obj/AdcObj.py
+@@ -73,7 +73,7 @@ class AdcObj(ModuleObj):
+ 
+         # sort by the key, or the sequence is dissorted
+         #sorted_list = sorted(ModuleObj.get_data(self).keys())
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+ 
+             if value == "TEMPERATURE":
+diff --git a/tools/dct/obj/ChipObj.py b/tools/dct/obj/ChipObj.py
+index 9311d1077..2098fbeac 100755
+--- a/tools/dct/obj/ChipObj.py
++++ b/tools/dct/obj/ChipObj.py
+@@ -16,31 +16,31 @@ import os
+ import collections
+ import xml.dom.minidom
+ 
+-from GpioObj import GpioObj
+-from GpioObj import GpioObj_whitney
+-from GpioObj import GpioObj_MT6759
+-from GpioObj import GpioObj_MT6739
+-from GpioObj import GpioObj_MT6771
+-from GpioObj import GpioObj_MT6763
+-from EintObj import EintObj
+-from EintObj import EintObj_MT6750S
+-from EintObj import EintObj_MT6739
+-from AdcObj import AdcObj
+-from ClkObj import ClkObj
+-from ClkObj import ClkObj_Everest
+-from ClkObj import ClkObj_Olympus
+-from ClkObj import ClkObj_Rushmore
+-from ClkObj import ClkObj_MT6779
+-from I2cObj import I2cObj
+-from I2cObj import I2cObj_MT6759
+-from I2cObj import I2cObj_MT6775
+-from PmicObj import PmicObj
+-from PmicObj import PmicObj_MT6758
+-from Md1EintObj import Md1EintObj
+-from Md1EintObj import Md1EintObj_MT6739
+-from PowerObj import PowerObj
+-from KpdObj import KpdObj
+-from ModuleObj import ModuleObj
++from .GpioObj import GpioObj
++from .GpioObj import GpioObj_whitney
++from .GpioObj import GpioObj_MT6759
++from .GpioObj import GpioObj_MT6739
++from .GpioObj import GpioObj_MT6771
++from .GpioObj import GpioObj_MT6763
++from .EintObj import EintObj
++from .EintObj import EintObj_MT6750S
++from .EintObj import EintObj_MT6739
++from .AdcObj import AdcObj
++from .ClkObj import ClkObj
++from .ClkObj import ClkObj_Everest
++from .ClkObj import ClkObj_Olympus
++from .ClkObj import ClkObj_Rushmore
++from .ClkObj import ClkObj_MT6779
++from .I2cObj import I2cObj
++from .I2cObj import I2cObj_MT6759
++from .I2cObj import I2cObj_MT6775
++from .PmicObj import PmicObj
++from .PmicObj import PmicObj_MT6758
++from .Md1EintObj import Md1EintObj
++from .Md1EintObj import Md1EintObj_MT6739
++from .PowerObj import PowerObj
++from .KpdObj import KpdObj
++from .ModuleObj import ModuleObj
+ 
+ from utility.util import log
+ from utility.util import LogLevel
+@@ -79,7 +79,7 @@ class ChipObj:
+         self.__objs["kpd"] = KpdObj()
+ 
+     def replace_obj(self, tag, obj):
+-        if not tag in self.__objs.keys():
++        if not tag in list(self.__objs.keys()):
+             return False
+ 
+         self.__objs[tag] = obj
+@@ -91,7 +91,7 @@ class ChipObj:
+         self.__objs['eint'].set_gpioObj(self.__objs['gpio'])
+ 
+     def append_obj(self, tag, obj):
+-        if tag in self.__objs.keys():
++        if tag in list(self.__objs.keys()):
+             return False
+ 
+         self.__objs[tag] = obj
+@@ -150,7 +150,7 @@ class ChipObj:
+ 
+     def generate(self, paras):
+         if len(paras) == 0:
+-            for obj in self.__objs.values():
++            for obj in list(self.__objs.values()):
+                 obj.gen_files()
+ 
+             self.gen_custDtsi()
+@@ -161,7 +161,7 @@ class ChipObj:
+ 
+     def create_obj(self, tag):
+         obj = None
+-        if tag in self.__objs.keys():
++        if tag in list(self.__objs.keys()):
+             obj = self.__objs[tag]
+ 
+         return obj
+@@ -180,9 +180,9 @@ class ChipObj:
+             idx = 0
+             name = ''
+             if para.strip() != '':
+-                for value in para_map.values():
++                for value in list(para_map.values()):
+                     if para in value:
+-                        name = para_map.keys()[idx]
++                        name = list(para_map.keys())[idx]
+                         break
+                     idx += 1
+ 
+@@ -210,7 +210,7 @@ class ChipObj:
+ 
+         #sorted_list = sorted(self.__objs.keys())
+         #for tag in sorted_list:
+-        for tag in self.__objs.keys():
++        for tag in list(self.__objs.keys()):
+             if cmp(tag, 'gpio') == 0:
+                 gpioObj = self.create_obj(tag)
+                 gen_str += ModuleObj.writeHeader(gpioObj.get_dtsiFileName())
+diff --git a/tools/dct/obj/ClkObj.py b/tools/dct/obj/ClkObj.py
+index 445fc7caf..779d407a1 100755
+--- a/tools/dct/obj/ClkObj.py
++++ b/tools/dct/obj/ClkObj.py
+@@ -14,11 +14,11 @@
+ 
+ import re
+ import string
+-import ConfigParser
++import configparser
+ 
+ import xml.dom.minidom
+ 
+-from ModuleObj import ModuleObj
++from .ModuleObj import ModuleObj
+ from data.ClkData import ClkData
+ from data.ClkData import OldClkData
+ from data.ClkData import NewClkData
+@@ -62,7 +62,7 @@ class ClkObj(ModuleObj):
+         return True
+ 
+     def get_cfgInfo(self):
+-        cp = ConfigParser.ConfigParser(allow_no_value=True)
++        cp = configparser.ConfigParser(allow_no_value=True)
+         cp.read(ModuleObj.get_figPath())
+ 
+         count = string.atoi(cp.get('CLK_BUF', 'CLK_BUF_COUNT'))
+@@ -110,13 +110,13 @@ class ClkObj(ModuleObj):
+         gen_str += '''} MTK_CLK_BUF_DRIVING_CURR;\n'''
+         gen_str += '''\n'''
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             gen_str += '''#define %s_STATUS_PMIC\t\tCLOCK_BUFFER_%s\n''' %(key[5:], value.get_varName().upper())
+ 
+         gen_str += '''\n'''
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             idx = value.get_curList().index(value.get_current())
+             if cmp(value.get_curList()[0], DEFAULT_AUTOK) == 0:
+@@ -137,7 +137,7 @@ class ClkObj(ModuleObj):
+         gen_str += '''\tmediatek,clkbuf-config = <'''
+ 
+         #sorted_list = sorted(ModuleObj.get_data(self).keys())
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             if key.find('PMIC') == -1:
+                 continue
+             value = ModuleObj.get_data(self)[key]
+@@ -149,7 +149,7 @@ class ClkObj(ModuleObj):
+         gen_str += '''\tmediatek,clkbuf-driving-current = <'''
+ 
+         #sorted_list = sorted(ModuleObj.get_data(self).keys())
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             if key.find('PMIC') == -1:
+                 continue
+             value = ModuleObj.get_data(self)[key]
+@@ -198,14 +198,14 @@ class ClkObj_Everest(ClkObj):
+         gen_str += '''} MTK_CLK_BUF_DRIVING_CURR;\n'''
+         gen_str += '''\n'''
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             if key.find(self.__pmic) != -1:
+                 gen_str += '''#define %s_STATUS_PMIC\t\t\t\tCLOCK_BUFFER_%s\n''' %(key[5:], value.get_varName())
+ 
+         gen_str += '''\n'''
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             if key.find(self.__pmic) != -1:
+                 gen_str += '''#define %s_DRIVING_CURR\t\tCLK_BUF_DRIVING_CURR_%sMA\n''' %(key, value.get_current().replace('.', '_'))
+@@ -213,14 +213,14 @@ class ClkObj_Everest(ClkObj):
+         gen_str += '''\n'''
+ 
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             if key.find(self.__rf) != -1:
+                 gen_str += '''#define %s_STATUS\t\tCLOCK_BUFFER_%s\n''' %(key[3:], value.get_varName())
+ 
+         gen_str += '''\n'''
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             if key.find(self.__rf) != -1:
+                 gen_str += '''#define %s_DRIVING_CURR\t\tCLK_BUF_DRIVING_CURR_%sMA\n''' %(key, value.get_current().replace('.', '_'))
+@@ -244,7 +244,7 @@ class ClkObj_Everest(ClkObj):
+ 
+         #sorted_list = sorted(ModuleObj.get_data(self).keys())
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+ 
+             if key.find(self.__rf) != -1:
+@@ -254,7 +254,7 @@ class ClkObj_Everest(ClkObj):
+ 
+         gen_str += '''\tmediatek,clkbuf-driving-current = <'''
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             if key.find(self.__rf) != -1:
+                 idx = value.get_curList().index(value.get_current())
+@@ -301,14 +301,14 @@ class ClkObj_Olympus(ClkObj_Everest):
+         gen_str += '''} MTK_CLK_BUF_DRIVING_CURR;\n'''
+         gen_str += '''\n'''
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             if key.find('PMIC') != -1:
+                 gen_str += '''#define %s_STATUS_PMIC\t\tCLOCK_BUFFER_%s\n''' %(key[5:], value.get_varName())
+ 
+         gen_str += '''\n'''
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             if key.find('RF') != -1:
+                 gen_str += '''#define %s_STATUS\t\t\t\tCLOCK_BUFFER_%s\n''' %(key[3:], value.get_varName())
+@@ -316,7 +316,7 @@ class ClkObj_Olympus(ClkObj_Everest):
+         gen_str += '''\n'''
+ 
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             if key.find('PMIC') != -1:
+                 continue
+             value = ModuleObj.get_data(self)[key]
+@@ -332,7 +332,7 @@ class ClkObj_Olympus(ClkObj_Everest):
+         gen_str += '''\n'''
+ 
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             if key.find('RF') != -1:
+                 continue
+             value = ModuleObj.get_data(self)[key]
+@@ -358,7 +358,7 @@ class ClkObj_Rushmore(ClkObj):
+         ClkObj.parse(self, node)
+ 
+     def get_cfgInfo(self):
+-        cp = ConfigParser.ConfigParser(allow_no_value=True)
++        cp = configparser.ConfigParser(allow_no_value=True)
+         cp.read(ModuleObj.get_figPath())
+ 
+         count = string.atoi(cp.get('CLK_BUF', 'CLK_BUF_COUNT'))
+@@ -404,14 +404,14 @@ class ClkObj_Rushmore(ClkObj):
+         gen_str += '''\n'''
+ 
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             if key.find('RF') != -1:
+                 gen_str += '''#define %s_STATUS\t\t\t\tCLOCK_BUFFER_%s\n''' %(key[3:], value.get_varName())
+ 
+         gen_str += '''\n'''
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             if key.find('RF') != -1:
+                 continue
+             value = ModuleObj.get_data(self)[key]
+@@ -434,7 +434,7 @@ class ClkObj_Rushmore(ClkObj):
+         gen_str += '''\tmediatek,clkbuf-config = <'''
+ 
+         #sorted_list = sorted(ModuleObj.get_data(self).keys())
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             if key.find('RF') == -1:
+                 continue
+             value = ModuleObj.get_data(self)[key]
+@@ -483,7 +483,7 @@ class ClkObj_MT6779(ClkObj):
+         return True
+ 
+     def get_cfgInfo(self):
+-        cp = ConfigParser.ConfigParser(allow_no_value=True)
++        cp = configparser.ConfigParser(allow_no_value=True)
+         cp.read(ModuleObj.get_figPath())
+ 
+         max_count = self.get_max_count(cp)
+@@ -519,7 +519,7 @@ class ClkObj_MT6779(ClkObj):
+         # generate some dummy data, used for generating dtsi file
+         for i in range(max_count):
+             key = "PMIC_CLK_BUF" + "%s" % (i + 1)
+-            if key not in ModuleObj.get_data(self).keys():
++            if key not in list(ModuleObj.get_data(self).keys()):
+                 data = NewClkData()
+                 ModuleObj.set_data(self, key, data)
+ 
+@@ -555,14 +555,14 @@ class ClkObj_MT6779(ClkObj):
+         gen_str += '''} MTK_CLK_BUF_CONTROLS_FOR_DESENSE;\n'''
+         gen_str += '''\n'''
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             if len(value.get_varName()):
+                 gen_str += '''#define %s_STATUS_PMIC\t\tCLOCK_BUFFER_%s\n''' % (key[5:], value.get_varName().upper())
+ 
+         gen_str += '''\n'''
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             if len(value.cur_buf_output_list) and len(value.cur_buf_output):
+                 idx = value.cur_buf_output_list.index(value.cur_buf_output)
+@@ -570,7 +570,7 @@ class ClkObj_MT6779(ClkObj):
+ 
+         gen_str += '''\n'''
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             if len(value.cur_driving_control_list) and len(value.cur_driving_control):
+                 idx = value.cur_driving_control_list.index(value.cur_driving_control)
+@@ -585,7 +585,7 @@ class ClkObj_MT6779(ClkObj):
+         gen_str += '''\tmediatek,clkbuf-quantity = <%d>;\n''' % self.__count
+         gen_str += '''\tmediatek,clkbuf-config = <'''
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             if key.find('PMIC') == -1:
+                 continue
+             value = ModuleObj.get_data(self)[key]
+@@ -599,7 +599,7 @@ class ClkObj_MT6779(ClkObj):
+ 
+         gen_str += '''\tmediatek,clkbuf-output-impedance = <'''
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             if key.find('PMIC') == -1:
+                 continue
+             value = ModuleObj.get_data(self)[key]
+@@ -614,7 +614,7 @@ class ClkObj_MT6779(ClkObj):
+ 
+         gen_str += '''\tmediatek,clkbuf-controls-for-desense = <'''
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             if key.find('PMIC') == -1:
+                 continue
+             value = ModuleObj.get_data(self)[key]
+diff --git a/tools/dct/obj/EintObj.py b/tools/dct/obj/EintObj.py
+index 961e31152..4631a6d89 100755
+--- a/tools/dct/obj/EintObj.py
++++ b/tools/dct/obj/EintObj.py
+@@ -16,7 +16,7 @@ import re
+ import os
+ import string
+ 
+-import ConfigParser
++import configparser
+ import xml.dom.minidom
+ 
+ from data.EintData import EintData
+@@ -84,7 +84,7 @@ class EintObj(ModuleObj):
+         ModuleObj.gen_spec(self, para)
+ 
+     def get_cfgInfo(self):
+-        cp = ConfigParser.ConfigParser(allow_no_value=True)
++        cp = configparser.ConfigParser(allow_no_value=True)
+         cp.read(ModuleObj.get_figPath())
+ 
+         ops = cp.options('GPIO')
+@@ -150,7 +150,7 @@ class EintObj(ModuleObj):
+ 
+         gen_str += '''\n\n'''
+ 
+-        sorted_list = sorted(ModuleObj.get_data(self).keys(), key=compare)
++        sorted_list = sorted(list(ModuleObj.get_data(self).keys()), key=compare)
+ 
+         for key in sorted_list:
+             value = ModuleObj.get_data(self)[key]
+@@ -224,8 +224,8 @@ class EintObj(ModuleObj):
+ 
+         gen_str += '''\t\t\t\t\t/* gpio, built-in func mode, built-in eint */\n'''
+         gen_str += '''\tmediatek,builtin_mapping = '''
+-        for (key, value) in EintData._builtin_map.items():
+-            for (sub_key, sub_value) in value.items():
++        for (key, value) in list(EintData._builtin_map.items()):
++            for (sub_key, sub_value) in list(value.items()):
+                 gen_str += '''<%s %s %s>, /* %s */\n\t\t\t\t\t''' %(sub_key, sub_value[0:1], key, sub_value)
+ 
+         gen_str = gen_str[0:gen_str.rfind(',')]
+@@ -235,7 +235,7 @@ class EintObj(ModuleObj):
+         return gen_str
+ 
+     def get_gpioNum(self, eint_num):
+-        for (key, value) in EintData.get_mapTable().items():
++        for (key, value) in list(EintData.get_mapTable().items()):
+             if cmp(eint_num, value) == 0:
+                 return key
+ 
+@@ -244,14 +244,14 @@ class EintObj(ModuleObj):
+     def refGpio(self, eint_num, flag):
+         gpio_vec= []
+ 
+-        for key in EintData._builtin_map.keys():
++        for key in list(EintData._builtin_map.keys()):
+             if string.atoi(eint_num) == string.atoi(key):
+                 temp_map = EintData._builtin_map[key]
+-                for key in temp_map.keys():
++                for key in list(temp_map.keys()):
+                     gpio_vec.append(key)
+ 
+                 if flag:
+-                    for item in temp_map.keys():
++                    for item in list(temp_map.keys()):
+                         item_data = self.__gpio_obj.get_gpioData(string.atoi(item))
+ 
+                         if item_data.get_defMode() == string.atoi(temp_map[item].split(':')[0]):
+@@ -280,7 +280,7 @@ class EintObj(ModuleObj):
+ 
+         gen_str += self.fill_mappingTable()
+ 
+-        sorted_list = sorted(ModuleObj.get_data(self).keys(), key=compare)
++        sorted_list = sorted(list(ModuleObj.get_data(self).keys()), key=compare)
+ 
+         for key in sorted_list:
+             value = ModuleObj.get_data(self)[key]
+@@ -338,7 +338,7 @@ class EintObj_MT6739(EintObj):
+ 
+         gen_str += self.fill_mappingTable()
+ 
+-        sorted_list = sorted(ModuleObj.get_data(self).keys(), key=compare)
++        sorted_list = sorted(list(ModuleObj.get_data(self).keys()), key=compare)
+ 
+         for key in sorted_list:
+             value = ModuleObj.get_data(self)[key]
+@@ -374,12 +374,12 @@ class EintObj_MT6739(EintObj):
+     def refGpio_defMode(self, eint_num, flag):
+         refGpio_defMode = 0
+ 
+-        for key in EintData._builtin_map.keys():
++        for key in list(EintData._builtin_map.keys()):
+             if string.atoi(eint_num) == string.atoi(key):
+                 temp_map = EintData._builtin_map[key]
+ 
+                 if flag:
+-                    for item in temp_map.keys():
++                    for item in list(temp_map.keys()):
+                         item_data = self.get_gpioObj().get_gpioData(string.atoi(item))
+ 
+                         if item_data.get_defMode() == string.atoi(temp_map[item].split(':')[0]):
+diff --git a/tools/dct/obj/GpioObj.py b/tools/dct/obj/GpioObj.py
+index a5765d5fa..dd19ce391 100755
+--- a/tools/dct/obj/GpioObj.py
++++ b/tools/dct/obj/GpioObj.py
+@@ -16,14 +16,14 @@ import re
+ import os
+ import sys
+ import string
+-import ConfigParser
++import configparser
+ import xml.dom.minidom
+ 
+ 
+ from data.GpioData import GpioData
+ from data.EintData import EintData
+-from ModuleObj import ModuleObj
+-import ChipObj
++from .ModuleObj import ModuleObj
++from . import ChipObj
+ from utility.util import compare
+ from utility.util import sorted_key
+ from utility.util import log
+@@ -41,7 +41,7 @@ class GpioObj(ModuleObj):
+         self.__gpio_column_enable = True
+ 
+     def get_cfgInfo(self):
+-        cp = ConfigParser.ConfigParser(allow_no_value=True)
++        cp = configparser.ConfigParser(allow_no_value=True)
+         cp.read(ModuleObj.get_cmpPath())
+ 
+         # get GPIO_FREQ section
+@@ -285,7 +285,7 @@ class GpioObj(ModuleObj):
+     def fill_hFile(self):
+         gen_str = '''//Configuration for GPIO SMT(Schmidt Trigger) Group output start\n'''
+         temp_list = []
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+         #for value in ModuleObj.get_data(self).values():
+             value = ModuleObj.get_data(self)[key]
+             num = value.get_smtNum()
+@@ -300,7 +300,7 @@ class GpioObj(ModuleObj):
+ 
+         gen_str += '''\n\n'''
+ 
+-        sorted_list = sorted(ModuleObj.get_data(self).keys(), key = compare)
++        sorted_list = sorted(list(ModuleObj.get_data(self).keys()), key = compare)
+ 
+         for key in sorted_list:
+             value = ModuleObj.get_data(self)[key]
+@@ -390,7 +390,7 @@ class GpioObj(ModuleObj):
+     def fill_cFile(self):
+         gen_str = ''
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             if 'GPIO_INIT_NO_COVER' in value.get_varNames():
+                 continue
+@@ -401,7 +401,7 @@ class GpioObj(ModuleObj):
+                     gen_str += '''#define %s_M_EINT\t\tGPIO_MODE_00\n''' % (varName)
+                 if self.__gpio_column_enable:
+                     temp_list = []
+-                    for item in GpioData._specMap.keys():
++                    for item in list(GpioData._specMap.keys()):
+                         regExp = '[_A-Z0-9:]*%s[_A-Z0-9:]*' %(item.upper())
+                         pat = re.compile(regExp)
+                         for i in range(0, GpioData._modNum):
+@@ -447,7 +447,7 @@ class GpioObj(ModuleObj):
+                         if pat.match(mode):
+                             gen_str += '''#define %s_CLK\t\tCLK_OUT%s\n''' % (varName, mode[4:])
+                             temp = ''
+-                            if varName in GpioData._freqMap.keys():
++                            if varName in list(GpioData._freqMap.keys()):
+                                 temp = GpioData._freqMap[varName]
+                             else:
+                                 temp = 'GPIO_CLKSRC_NONE'
+@@ -455,7 +455,7 @@ class GpioObj(ModuleObj):
+                 else:
+                     mode_name = GpioData.get_modeName(key, value.get_defMode())
+                     bmatch = False
+-                    for item in GpioData._specMap.keys():
++                    for item in list(GpioData._specMap.keys()):
+                         regExp = '[_A-Z0-9:]*%s[_A-Z0-9:]*' %(item.upper())
+                         pat = re.compile(regExp)
+                         if pat.match(mode_name):
+@@ -481,7 +481,7 @@ class GpioObj(ModuleObj):
+         gen_str += '''\tgpio_pins_default: gpiodef{\n\t};\n\n'''
+ 
+         #sorted_list = sorted(ModuleObj.get_data(self).keys(), key = compare)
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+         #for key in sorted_list:
+             value = ModuleObj.get_data(self)[key]
+             gen_str += '''\t%s: gpio@%s {\n''' %(key.lower(), key[4:])
+@@ -553,7 +553,7 @@ class GpioObj(ModuleObj):
+     def fill_pinfunc_hFile(self):
+         gen_str = '''#include \"mt65xx.h\"\n\n'''
+         #sorted_list = sorted(ModuleObj.get_data(self).keys(), key = compare)
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+         #for key in sorted_list:
+             value = ModuleObj.get_data(self)[key]
+             for i in range(0, GpioData._modNum):
+@@ -580,7 +580,7 @@ class GpioObj(ModuleObj):
+         gen_str += '''static const struct mtk_desc_pin mtk_pins_%s[] = {\n''' %(ModuleObj.get_chipId().lower())
+ 
+         #sorted_list = sorted(ModuleObj.get_data(self).keys(), key = compare)
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+         #for key in sorted_list:
+             value = ModuleObj.get_data(self)[key]
+             gen_str += '''\tMTK_PIN(\n'''
+@@ -608,7 +608,7 @@ class GpioObj(ModuleObj):
+         gen_str = '''&gpio_usage_mapping {\n'''
+ 
+         #sorted_list = sorted(ModuleObj.get_data(self).keys(), key = compare)
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+         #for key in sorted_list:
+             value = ModuleObj.get_data(self)[key]
+             for varName in value.get_varNames():
+@@ -661,7 +661,7 @@ class GpioObj_MT6759(GpioObj):
+         gen_str = '''&gpio_usage_mapping {\n'''
+ 
+         #sorted_list = sorted(ModuleObj.get_data(self).keys(), key = compare)
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+         #for key in sorted_list:
+             value = ModuleObj.get_data(self)[key]
+             for varName in value.get_varNames():
+@@ -676,7 +676,7 @@ class GpioObj_MT6739(GpioObj_MT6759):
+         GpioObj_MT6759.__init__(self)
+ 
+     def get_eint_index(self, gpio_index):
+-        if string.atoi(gpio_index) in GpioData._map_table.keys():
++        if string.atoi(gpio_index) in list(GpioData._map_table.keys()):
+             return GpioData._map_table[string.atoi(gpio_index)]
+         return -1
+ 
+@@ -686,7 +686,7 @@ class GpioObj_MT6739(GpioObj_MT6759):
+         gen_str += '''static const struct mtk_desc_pin mtk_pins_%s[] = {\n''' % (ModuleObj.get_chipId().lower())
+ 
+         # sorted_list = sorted(ModuleObj.get_data(self).keys(), key = compare)
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             # for key in sorted_list:
+             value = ModuleObj.get_data(self)[key]
+             gen_str += '''\tMTK_PIN(\n'''
+@@ -720,7 +720,7 @@ class GpioObj_MT6771(GpioObj_MT6739):
+         gen_str = '''\n&gpio{\n'''
+         gen_str += '''\tgpio_init_default = '''
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+ 
+             # if var name contains GPIO_INIT_NO_COVER, the device tree info of the pin in cust.dtsi file would not gen
+@@ -746,7 +746,7 @@ class GpioObj_MT6763(GpioObj_MT6759):
+         gen_str = '''\n&gpio{\n'''
+         gen_str += '''\tgpio_init_default = '''
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+ 
+             num = string.atoi(key[4:])
+diff --git a/tools/dct/obj/I2cObj.py b/tools/dct/obj/I2cObj.py
+index 1d73e2716..351b75099 100755
+--- a/tools/dct/obj/I2cObj.py
++++ b/tools/dct/obj/I2cObj.py
+@@ -15,14 +15,14 @@
+ import re
+ import string
+ import xml.dom.minidom
+-import ConfigParser
++import configparser
+ 
+-from ModuleObj import ModuleObj
++from .ModuleObj import ModuleObj
+ #from utility import util
+ from utility.util import sorted_key
+ from data.I2cData import I2cData
+ from data.I2cData import BusData
+-import ChipObj
++from . import ChipObj
+ 
+ class I2cObj(ModuleObj):
+     _busList = []
+@@ -33,7 +33,7 @@ class I2cObj(ModuleObj):
+         #self.__bBusEnable = True
+ 
+     def get_cfgInfo(self):
+-        cp = ConfigParser.ConfigParser(allow_no_value=True)
++        cp = configparser.ConfigParser(allow_no_value=True)
+         cp.read(ModuleObj.get_figPath())
+ 
+         I2cData._i2c_count = string.atoi(cp.get('I2C', 'I2C_COUNT'))
+@@ -103,7 +103,7 @@ class I2cObj(ModuleObj):
+         gen_str += '''\n'''
+ 
+         #sorted_lst = sorted(ModuleObj.get_data(self).keys(), key=compare)
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             temp = ''
+             if value.get_address().strip() == '':
+@@ -137,7 +137,7 @@ class I2cObj(ModuleObj):
+                     temp_str = 'use-push-pull'
+                 gen_str += '''\tmediatek,%s;\n''' %(temp_str)
+ 
+-            for key in sorted_key(ModuleObj.get_data(self).keys()):
++            for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+                 value = ModuleObj.get_data(self)[key]
+                 channel = 'I2C_CHANNEL_%d' %(i)
+                 if cmp(value.get_channel(), channel) == 0 and cmp(value.get_varName(), 'NC') != 0 and value.get_address().strip() != '':
+@@ -184,7 +184,7 @@ class I2cObj_MT6759(I2cObj):
+                     temp_str = 'use-push-pull'
+                 gen_str += '''\tmediatek,%s;\n''' %(temp_str)
+ 
+-            for key in sorted_key(ModuleObj.get_data(self).keys()):
++            for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+                 value = ModuleObj.get_data(self)[key]
+                 channel = 'I2C_CHANNEL_%d' %(i)
+                 if cmp(value.get_channel(), channel) == 0 and cmp(value.get_varName(), 'NC') != 0 and value.get_address().strip() != '':
+@@ -222,7 +222,7 @@ class I2cObj_MT6775(I2cObj):
+                     temp_str = 'use-push-pull'
+                 gen_str += '''\tmediatek,%s;\n''' %(temp_str)
+ 
+-            for key in sorted_key(ModuleObj.get_data(self).keys()):
++            for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+                 value = ModuleObj.get_data(self)[key]
+                 channel = 'I2C_CHANNEL_%d' %(i)
+                 if cmp(value.get_channel(), channel) == 0 and cmp(value.get_varName(), 'NC') != 0 and value.get_address().strip() != '':
+diff --git a/tools/dct/obj/KpdObj.py b/tools/dct/obj/KpdObj.py
+index 6dae46f25..31b285e57 100755
+--- a/tools/dct/obj/KpdObj.py
++++ b/tools/dct/obj/KpdObj.py
+@@ -14,10 +14,10 @@
+ 
+ import re
+ import string
+-import ConfigParser
++import configparser
+ import xml.dom.minidom
+ 
+-from ModuleObj import ModuleObj
++from .ModuleObj import ModuleObj
+ from utility.util import LogLevel
+ from utility.util import log
+ from data.KpdData import KpdData
+@@ -29,7 +29,7 @@ class KpdObj(ModuleObj):
+ 
+ 
+     def get_cfgInfo(self):
+-        cp = ConfigParser.ConfigParser(allow_no_value=True)
++        cp = configparser.ConfigParser(allow_no_value=True)
+         cp.read(ModuleObj.get_cmpPath())
+ 
+         ops = cp.options('Key_definition')
+@@ -219,7 +219,7 @@ class KpdObj(ModuleObj):
+         gen_str += '''/****************Uboot Customation**************************/\n'''
+         gen_str += '''/***********************************************************/\n'''
+ 
+-        for (key, value) in KpdData.get_modeKeys().items():
++        for (key, value) in list(KpdData.get_modeKeys().items()):
+             if cmp(value, 'NC') != 0:
+                 idx = self.get_matrixIdx(value)
+                 #idx = KpdData.get_matrix().index(value)
+@@ -289,7 +289,7 @@ class KpdObj(ModuleObj):
+                 continue
+             gen_str += '''\tmediatek,kpd-hw-dl-key%d = <%s>;\n''' %(KpdData.get_downloadKeys().index(key), self.get_matrixIdx(key))
+ 
+-        for (key, value) in KpdData.get_modeKeys().items():
++        for (key, value) in list(KpdData.get_modeKeys().items()):
+             if cmp(value, 'NC') == 0:
+                 continue
+             gen_str += '''\tmediatek,kpd-hw-%s-key = <%d>;\n''' %(key.lower(), self.get_matrixIdx(value))
+diff --git a/tools/dct/obj/Md1EintObj.py b/tools/dct/obj/Md1EintObj.py
+index 30044c434..cce141f18 100755
+--- a/tools/dct/obj/Md1EintObj.py
++++ b/tools/dct/obj/Md1EintObj.py
+@@ -12,7 +12,7 @@
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ # See http://www.gnu.org/licenses/gpl-2.0.html for more details.
+ 
+-import ConfigParser
++import configparser
+ import string
+ import xml.dom.minidom
+ from itertools import dropwhile
+@@ -20,7 +20,7 @@ import re
+ 
+ from utility import util
+ from utility.util import sorted_key
+-from ModuleObj import ModuleObj
++from .ModuleObj import ModuleObj
+ from data.Md1EintData import Md1EintData
+ from utility.util import LogLevel
+ 
+@@ -32,7 +32,7 @@ class Md1EintObj(ModuleObj):
+ 
+     def get_cfgInfo(self):
+         # ConfigParser accept ":" and "=", so SRC_PIN will be treated specially
+-        cp = ConfigParser.ConfigParser(allow_no_value=True)
++        cp = configparser.ConfigParser(allow_no_value=True)
+         cp.read(ModuleObj.get_figPath())
+ 
+         if cp.has_option('Chip Type', 'MD1_EINT_SRC_PIN'):
+@@ -116,7 +116,7 @@ class Md1EintObj(ModuleObj):
+         gen_str += '''\n'''
+ 
+         if self.__bSrcPinEnable:
+-            for (key, value) in self.__srcPin.items():
++            for (key, value) in list(self.__srcPin.items()):
+                 gen_str += '''#define %s\t\t%s\n''' %(key, value)
+             gen_str += '''\n'''
+ 
+@@ -129,7 +129,7 @@ class Md1EintObj(ModuleObj):
+         gen_str += '''\n'''
+ 
+         count = 0
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             if cmp(value.get_varName(), 'NC') == 0:
+                 continue
+@@ -154,7 +154,7 @@ class Md1EintObj(ModuleObj):
+     def fill_dtsiFile(self):
+         gen_str = ''
+         gen_str += '''&eintc {\n'''
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             if cmp(value.get_varName(), 'NC') == 0:
+                 continue
+@@ -204,7 +204,7 @@ class Md1EintObj_MT6739(Md1EintObj):
+ 
+     def fill_dtsiFile(self):
+         gen_str = ''
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             if cmp(value.get_varName(), 'NC') == 0:
+                 continue
+diff --git a/tools/dct/obj/PmicObj.py b/tools/dct/obj/PmicObj.py
+index 2414c00bd..d9753aa65 100755
+--- a/tools/dct/obj/PmicObj.py
++++ b/tools/dct/obj/PmicObj.py
+@@ -14,10 +14,10 @@
+ 
+ import sys, os
+ import re
+-import ConfigParser
++import configparser
+ import xml.dom.minidom
+ 
+-from ModuleObj import ModuleObj
++from .ModuleObj import ModuleObj
+ from data.PmicData import PmicData
+ 
+ from utility.util import log
+@@ -39,7 +39,7 @@ class PmicObj(ModuleObj):
+ 
+ 
+     def get_cfgInfo(self):
+-        cp = ConfigParser.ConfigParser(allow_no_value=True)
++        cp = configparser.ConfigParser(allow_no_value=True)
+         cp.read(ModuleObj.get_cmpPath())
+ 
+         PmicData._var_list = cp.options('APPLICATION')
+@@ -127,7 +127,7 @@ class PmicObj(ModuleObj):
+     def fill_hFile(self):
+         gen_str = ''
+         used = []
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             for name in value.get_nameList():
+                 if name.strip() != '':
+@@ -149,7 +149,7 @@ class PmicObj(ModuleObj):
+     def fill_dtsiFile(self):
+         gen_str = ''
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             gen_str += '''&mt_pmic_%s_ldo_reg {\n''' %(value.get_ldoName().lower())
+             gen_str += '''\tregulator-name = \"%s\";\n''' %((value.get_ldoName().replace('_', '')).lower())
+@@ -160,7 +160,7 @@ class PmicObj(ModuleObj):
+         gen_str += '''\n'''
+         gen_str += '''&kd_camera_hw1 {\n'''
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             for varName in value.get_nameList():
+             #for i in range(0, self.__appCount):
+@@ -185,7 +185,7 @@ class PmicObj(ModuleObj):
+         gen_str += '''};\n\n'''
+         gen_str += '''&touch {\n'''
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             for name in value.get_nameList():
+                 if name.find('TOUCH') != -1:
+@@ -206,7 +206,7 @@ class PmicObj(ModuleObj):
+         gen_str += '''{\n'''
+         idx = 0
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             if value.get_defEnable() != 0:
+                 gen_str += '''\t%s(%s,%d);\n''' %(self.__func, self.__paraList[idx], value.get_defEnable()-1)
+@@ -231,7 +231,7 @@ class PmicObj_MT6758(PmicObj):
+     def fill_dtsiFile(self):
+         gen_str = ''
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             gen_str += '''&mt_pmic_%s_ldo_reg {\n''' %(value.get_ldoName().lower())
+             gen_str += '''\tregulator-name = \"%s\";\n''' %((value.get_ldoName().replace('_', '')).lower())
+@@ -242,7 +242,7 @@ class PmicObj_MT6758(PmicObj):
+         gen_str += '''\n'''
+         gen_str += '''&kd_camera_hw1 {\n'''
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             for varName in value.get_nameList():
+             #for i in range(0, self.__appCount):
+@@ -272,7 +272,7 @@ class PmicObj_MT6758(PmicObj):
+         gen_str += '''};\n\n'''
+         gen_str += '''&touch {\n'''
+ 
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             for name in value.get_nameList():
+                 if name.find('TOUCH') != -1:
+diff --git a/tools/dct/obj/PowerObj.py b/tools/dct/obj/PowerObj.py
+index 6cff9bf5d..31e194f00 100755
+--- a/tools/dct/obj/PowerObj.py
++++ b/tools/dct/obj/PowerObj.py
+@@ -15,15 +15,15 @@
+ import sys,os
+ import re
+ import string
+-import ConfigParser
++import configparser
+ import xml.dom.minidom
+ 
+-import ChipObj
++from . import ChipObj
+ from data.PowerData import PowerData
+ from utility.util import log
+ from utility.util import LogLevel
+ from utility.util import sorted_key
+-from ModuleObj import ModuleObj
++from .ModuleObj import ModuleObj
+ 
+ class PowerObj(ModuleObj):
+     def __init__(self):
+@@ -31,7 +31,7 @@ class PowerObj(ModuleObj):
+         self.__list = {}
+ 
+     def getCfgInfo(self):
+-        cp = ConfigParser.ConfigParser(allow_no_value=True)
++        cp = configparser.ConfigParser(allow_no_value=True)
+         cp.read(ModuleObj.get_figPath())
+ 
+         self.__list = cp.options('POWER')
+@@ -71,7 +71,7 @@ class PowerObj(ModuleObj):
+ 
+     def fill_hFile(self):
+         gen_str = ''
+-        for key in sorted_key(ModuleObj.get_data(self).keys()):
++        for key in sorted_key(list(ModuleObj.get_data(self).keys())):
+             value = ModuleObj.get_data(self)[key]
+             if value.get_varName() == '':
+                 continue
+diff --git a/tools/dct/utility/util.py b/tools/dct/utility/util.py
+index 8c0b16e17..bf8a57c49 100755
+--- a/tools/dct/utility/util.py
++++ b/tools/dct/utility/util.py
+@@ -27,11 +27,11 @@ class LogLevel:
+ 
+ def log(level, msg):
+     if level == LogLevel.info:
+-        print LEVEL_INFO + msg
++        print(LEVEL_INFO + msg)
+     elif level == LogLevel.warn:
+-        print LEVEL_WARN + msg
++        print(LEVEL_WARN + msg)
+     elif level == LogLevel.error:
+-        print LEVEL_ERROR + msg
++        print(LEVEL_ERROR + msg)
+ 
+ def compare(value):
+     lst = re.findall(r'\d+', value)
+-- 
+2.41.0
+

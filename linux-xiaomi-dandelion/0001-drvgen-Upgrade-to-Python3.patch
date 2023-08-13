@@ -1,0 +1,43 @@
+From cdc43d7b7a9e1733a41dff4cb9c704be3722f57d Mon Sep 17 00:00:00 2001
+From: SheatNoisette <sheatnoisette@protonmail.com>
+Date: Sun, 13 Aug 2023 17:45:06 +0200
+Subject: [PATCH 1/5] drvgen: Upgrade to Python3
+
+---
+ tools/dct/DrvGen.py | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/tools/dct/DrvGen.py b/tools/dct/DrvGen.py
+index f6f845a75..40150c65c 100755
+--- a/tools/dct/DrvGen.py
++++ b/tools/dct/DrvGen.py
+@@ -43,7 +43,7 @@ from utility.util import LogLevel
+ from utility.util import log
+ 
+ def usage():
+-    print '''
++    print('''
+ usage: DrvGen [dws_path] [file_path] [log_path] [paras]...
+ 
+ options and arguments:
+@@ -52,7 +52,7 @@ dws_path    :    dws file path
+ file_path   :    where you want to put generated files
+ log_path    :    where to store the log files
+ paras        :    parameter for generate wanted file
+-'''
++''')
+ 
+ def is_oldDws(path, gen_spec):
+     if not os.path.exists(path):
+@@ -61,7 +61,7 @@ def is_oldDws(path, gen_spec):
+ 
+     try:
+         root = xml.dom.minidom.parse(dws_path)
+-    except Exception, e:
++    except Exception as e:
+         log(LogLevel.warn, '%s is not xml format, try to use old DCT!' %(dws_path))
+         if len(gen_spec) == 0:
+             log(LogLevel.warn, 'Please use old DCT UI to gen all files!')
+-- 
+2.41.0
+
