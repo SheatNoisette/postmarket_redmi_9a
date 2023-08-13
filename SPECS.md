@@ -6,19 +6,22 @@ Codename: Dandelion
 
 ## How to be in preloader mode
 
-Press and hold the both of the volume buttons while plugging the phone to 
+Press and hold the both of the volume buttons while plugging the phone to
 the computer.
 
 ## Hardware
 
 - Mediatek Helio G25 (MT6762G)
     - 12 nm
-    - 400 - 2001 Mhz
-    - AES/ASMID/NEON/PMULL/SHA1/SHA2
-    - 2 Clusters (A53)
+    - Scaling: 400 - 2001 Mhz
+    - Extensions: AES/ASMID/NEON/PMULL/SHA1/SHA2
+    - 2 Clusters (A53), 8 cores
+      - Cluster 0: 4 A53 @ 2000 Mhz
+      - Cluster 1: 4 A53 @ 1500 Mhz
     - Revision r0p4
-    - 8 cores
-    - PowerVR Rogue GE8320 GLES 3.2 / OpenCL 1.2
+    - PowerVR Rogue GE8320 GLES 3.2 / OpenCL 1.2 / Vulkan 1.1.131
+      - 400 Mhz
+      - 2 Clusters
     - CPUID: 0xF18B822D4CC42F1FAE4C3D17B9EC1285A30B0725
     - L1 data: 16ko
     - L1 Instruction: 16ko
@@ -30,33 +33,38 @@ the computer.
     - Bluetooth 5.0
     - Wifi
         - 2.4 Ghz: Yes
-        - 5 Ghz: No
+        - 5 Ghz: No (Hardware supports 5 Ghz, but not enabled)
+    - LTE Cat.4
 - 32GB eMMC storage
 - 1600x720 IPS LCD (68x151mm / 269dpi / 60hz): nt36525b ???
-    - hx83102d Controller ?
+    - hx83102d Controller (Defconfig)
 - 5000 mAh battery LiPo
-- Rear-Facing Camera: Hynix hi1337
+  - CONFIG_CHARGER_BQ2560X (Defconfig): Texas Instruments BQ2560X
+- Rear-Facing Camera: Hynix hi1337 (Defconfig)
     - 13 MP Photo
     - 2.1 MP Video
     - 3.43 mm focal
     - Focus: Infinity, auto, macro, constinuous-video, continuous-picture
     - Flash
-- Front Camera: hynix_hi259 ??? / ov ov02b ???
+- Front Camera: hynix_hi259 (Defconfig) / ov ov02b (Defconfig)
     - 5.0 MP Photo
     - 2.1 MP Video
     - 2.23mm focal
     - focus: Fixed, infinity
-- Accelerometer: ???
-- Proximity: ???
-- Light sensors: ???
+- Accelerometer (Android): ???
+- Proximity (Android): ???
+- Light sensors (Android): ???
 - Haptic motor
-- FM Radio: MT6631_FM ???
-- GPS
-- OTG Support (From Android)
+- FM Radio: MT6631_FM (Defconfig: MT6631_FM)
+- GPS Support: GPS, GLONASS, Beidou, Galileo (From Android)
+- OTG Support: Yes (From Android)
 - Headphone jack
+- Speakers: Bottom and top
+- Dual SIM
+- SD Card: Yes
 
 Others:
-- 2 UARTS ? MT6577
+- 2 UARTS MT6577 (Defconfig: CONFIG_SERIAL_8250_MT6577), compatible 8250
 - RT5509 Amplifier
 
 ## Software Out-Of-The-Box
@@ -79,6 +87,7 @@ Some data from the phone:
 - Android Security Update 2022-07-01
 - Broadband version MOLY.LR12A.R3.MP.V134.1.P69
 - Kernel 4.19.127-pref-g7288046673d5 (armv8l)
+- uname: Linux localhost 4.19.127-perf-g7288046673d5 #1 SMP PREEMPT Fri Jul 8 20:22:55 CST 2022 armv8l
 
 ### boot.img
 
