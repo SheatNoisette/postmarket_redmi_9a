@@ -1,7 +1,7 @@
 From df90a128744e9988680316bed37524247eb5b09e Mon Sep 17 00:00:00 2001
 From: SheatNoisette <sheatnoisette@protonmail.com>
 Date: Sun, 13 Aug 2023 18:15:35 +0200
-Subject: [PATCH 4/5] drvgen: Remplace string.atoi to int fnc
+Subject: [PATCH 4/8] drvgen: Remplace string.atoi to int fnc
 
 ---
  tools/dct/obj/AdcObj.py     |  4 ++--

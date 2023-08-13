@@ -1,0 +1,24 @@
+From 0d189abcfdbf847307adab599960b8388ed75258 Mon Sep 17 00:00:00 2001
+From: SheatNoisette <sheatnoisette@protonmail.com>
+Date: Sun, 13 Aug 2023 18:37:20 +0200
+Subject: [PATCH 6/8] drvgen: Remove duplicate of DT_EXT_MD_EXP
+
+---
+ tools/dct/config/YuSu.cmp | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/tools/dct/config/YuSu.cmp b/tools/dct/config/YuSu.cmp
+index f51da4e70..c10a3fdcc 100644
+--- a/tools/dct/config/YuSu.cmp
++++ b/tools/dct/config/YuSu.cmp
+@@ -48,7 +48,6 @@ IRQ_NFC
+ HEADSET_HOOK
+ MT6329_PMIC
+ EINT_HDMI_HPD
+-DT_EXT_MD_EXP
+ DT_EXT_MD_WDT
+ DT_EXT_MD_WK_UP
+ DT_EXT_MD_WK_UP_USB
+-- 
+2.41.0
+

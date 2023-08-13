@@ -1,7 +1,7 @@
 From 22b7d2a2bddf533904a308691fd86a75ddb28415 Mon Sep 17 00:00:00 2001
 From: SheatNoisette <sheatnoisette@protonmail.com>
 Date: Sun, 13 Aug 2023 18:24:54 +0200
-Subject: [PATCH 5/5] drvgen: Rename list variables for py3
+Subject: [PATCH 5/8] drvgen: Rename list variables for py3
 
 ---
  tools/dct/data/EintData.py | 12 ++++++------

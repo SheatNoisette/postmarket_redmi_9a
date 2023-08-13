@@ -1,0 +1,34 @@
+From d24b2ec9e837e1cc5006b4017ac7685c95457818 Mon Sep 17 00:00:00 2001
+From: SheatNoisette <sheatnoisette@protonmail.com>
+Date: Sun, 13 Aug 2023 19:08:50 +0200
+Subject: [PATCH 8/8] ft8006s_spi: Add dummy firmware
+
+---
+ .gitignore                                                       | 1 -
+ .../mediatek/ft8006s_spi/include/firmware/fw_helitai_v0e.i       | 0
+ .../mediatek/ft8006s_spi/include/firmware/fw_sample.i            | 0
+ 3 files changed, 1 deletion(-)
+ create mode 100644 drivers/input/touchscreen/mediatek/ft8006s_spi/include/firmware/fw_helitai_v0e.i
+ create mode 100644 drivers/input/touchscreen/mediatek/ft8006s_spi/include/firmware/fw_sample.i
+
+diff --git a/.gitignore b/.gitignore
+index 4105cfbd6..5b97b06be 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -18,7 +18,6 @@
+ *.so
+ *.so.dbg
+ *.mod.c
+-*.i
+ *.lst
+ *.symtypes
+ *.order
+diff --git a/drivers/input/touchscreen/mediatek/ft8006s_spi/include/firmware/fw_helitai_v0e.i b/drivers/input/touchscreen/mediatek/ft8006s_spi/include/firmware/fw_helitai_v0e.i
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/drivers/input/touchscreen/mediatek/ft8006s_spi/include/firmware/fw_sample.i b/drivers/input/touchscreen/mediatek/ft8006s_spi/include/firmware/fw_sample.i
+new file mode 100644
+index 000000000..e69de29bb
+-- 
+2.41.0
+

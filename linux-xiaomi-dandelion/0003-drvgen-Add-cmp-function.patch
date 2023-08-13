@@ -1,7 +1,7 @@
 From 137772cfa4fa9c189346f30c715ed3d440c8b37d Mon Sep 17 00:00:00 2001
 From: SheatNoisette <sheatnoisette@protonmail.com>
 Date: Sun, 13 Aug 2023 18:11:18 +0200
-Subject: [PATCH 3/5] drvgen: Add cmp function
+Subject: [PATCH 3/8] drvgen: Add cmp function
 
 ---
  tools/dct/DrvGen.py         | 1 +

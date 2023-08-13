@@ -1,7 +1,7 @@
 From c22ccf98897a3992ef75213ec6179ecf5a3dae5c Mon Sep 17 00:00:00 2001
 From: SheatNoisette <sheatnoisette@protonmail.com>
 Date: Sun, 13 Aug 2023 17:59:30 +0200
-Subject: [PATCH 2/5] drvgen: Upgrade components to Python 3
+Subject: [PATCH 2/8] drvgen: Upgrade components to Python 3
 
 ---
  tools/dct/data/EintData.py  |  6 ++--
