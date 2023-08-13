@@ -1,0 +1,55 @@
+# Reference: <https://postmarketos.org/vendorkernel>
+# Kernel config based on: arch/arm64/configs/(CHANGEME!)
+
+pkgname=linux-xiaomi-dandelion
+pkgver=4.9.190
+pkgrel=0
+pkgdesc="Xiaomi Redmi 9A kernel fork"
+arch="aarch64"
+_carch="arm64"
+_flavor="xiaomi-dandelion"
+url="https://kernel.org"
+license="GPL-2.0-only"
+options="!strip !check !tracedeps pmb:cross-native"
+makedepends="
+	bash
+	bc
+	bison
+	devicepkg-dev
+	findutils
+	flex
+	openssl-dev
+	perl
+"
+
+# Source
+_repository="linux-xiaomi-dandelion"
+_commit="8974b9164af90d94603900b229264ae879a83a83"
+_config="config-$_flavor.$arch"
+source="
+	$pkgname-$_commit.tar.gz::https://github.com/SheatNoisette/$_repository/archive/$_commit.tar.gz
+	$_config
+"
+builddir="$srcdir/$_repository-$_commit"
+_outdir="out"
+
+prepare() {
+	default_prepare
+	. downstreamkernel_prepare
+}
+
+build() {
+	unset LDFLAGS
+	make O="$_outdir" ARCH="$_carch" CC="${CC:-gcc}" \
+		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-postmarketOS"
+}
+
+package() {
+	downstreamkernel_package "$builddir" "$pkgdir" "$_carch" \
+		"$_flavor" "$_outdir"
+}
+
+sha512sums="
+d1180f0be8111fba40030b5cae104d5ba60cd49408276bdb9bce3594e8cae5151fa6e90861068d6abbe0b6392514a99f0ac578aff8bdf69d02445e278b663f43  linux-xiaomi-dandelion-8974b9164af90d94603900b229264ae879a83a83.tar.gz
+722f3d1ee4d879895135e7c755e027c5f7fbcb0512a9d3f08e01173064a7880c3a67a6154082227fb5eff475233830ba8627e4b18c42dfda6fdfffeb0f55b836  config-xiaomi-dandelion.aarch64
+"
