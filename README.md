@@ -59,7 +59,7 @@ the top of the screen, and the phone will boot normally.
 
 The kernel sources are available on the Xiaomi Kernel OpenSource Github page,
 but I've made a mirror of the sources on this repository for convenience
-(here)[https://github.com/SheatNoisette/linux-xiaomi-dandelion]
+[here](https://github.com/SheatNoisette/linux-xiaomi-dandelion)
 
 ## Todo
 
