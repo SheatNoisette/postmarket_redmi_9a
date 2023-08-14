@@ -97,7 +97,8 @@ not be possible (This depends on the state of the kernel sources):
 
 ## Flashing PostmarketOS
 
-@TODO
+**THE DEVICE IS CURRENTLY NOT BOOTING, DO NOT FLASH POSTMARKETOS ON IT!**
+See [PMBOOTSTRAP.md](PMBOOTSTRAP.md) for more details.
 
 ## License
 This work is licensed under the MIT License except otherwise specified.
