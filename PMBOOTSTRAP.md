@@ -23,6 +23,8 @@ during the whole process.
 
 ## Copy the pmbootstrap layers
 
+Run the `pmbootstrap init` command to initialize the pmbootstrap environment.
+
 Because the device is not supported by pmbootstrap yet, you need to copy the
 layers from the pmbootstrap repository to your local pmbootstrap cache:
 ```bash
@@ -30,6 +32,22 @@ layers from the pmbootstrap repository to your local pmbootstrap cache:
 $ ln -s $PWD/linux-xiaomi-dandelion/ /home/$USER/.local/var/pmbootstrap/cache_git/pmaports/device/testing/
 $ ln -s $PWD/device-xiaomi-dandelion/ /home/$USER/.local/var/pmbootstrap/cache_git/pmaports/device/testing/
 ```
+
+## Configure pmbootstrap
+
+Run the `pmbootstrap init` command to modify the pmbootstrap configuration.
+
+When doing the pmbootstrap init, you need to select the device. Use the
+following configuration:
+```
+Work path: /home/<user>/.local/var/pmbootstrap
+Channel: edge
+Vendor: Xiaomi
+Device codename: dandelion
+Username: <user>
+User interface: console
+```
+Leave the other options to their default values.
 
 ## Building the image
 
