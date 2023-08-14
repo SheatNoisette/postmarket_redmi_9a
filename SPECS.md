@@ -73,10 +73,7 @@ Before messing with the phone, I made a backup of the system partition using
 mtkclient. This will be useful if something goes wrong.
 
 Everything presented here is from the stock ROM in the EU version of the phone
-without any updates (Out-Of-The-Box).
-This may not be the same for other versions released in other countries.
-
-### Android reported
+without any updates (Out-Of-The-Bhttps://github.com/SheatNoisette/postmarket_redmi_9a/blob/main/SPECS.md#gpt-table
 
 The phone is running Android 11, which is quite slow (but it's Android, so it's).
 
@@ -207,3 +204,62 @@ flashinfo:           Offset 0x0000000746bfbe00, Length 0x0000000001000000, Flags
 
 Total disk size:0x0000000747c00000, sectors:0x0000000003a3e000
 ```
+
+### Hidden fastboot commands
+
+While binwalk-ing the eMMC image, I found some interesting fastboot commands
+that are not documented anywhere:
+```
+oem printk-ratelimit
+oem get_token
+oem p2u
+oem dump_pllk_log
+oem off-mode-charge
+oem key
+oem lks
+oem unlock
+oem lock
+oem get_socid
+oem fbreason
+oem poweroff
+oem lkmsg
+oem lpmsg
+oem CmdOemSetSim
+oem CmdOemGetSim
+oem scp_status
+oem scp_log_thru_ap_uart
+oem usb2jtag
+oem ultraflash:
+oem ultraflash_en
+```
+
+### mtkclient preloader
+
+```
+Preloader -     CPU:                    MT6765/MT8768t(Helio P35/G35)
+Preloader -     HW version:             0x0
+Preloader -     WDT:                    0x10007000
+Preloader -     Uart:                   0x11002000
+Preloader -     Brom payload addr:      0x100a00
+Preloader -     DA payload addr:        0x201000
+Preloader -     CQ_DMA addr:            0x10212000
+Preloader -     Var1:                   0x25
+Preloader - Disabling Watchdog...
+Preloader - HW code:                    0x766
+Preloader - Target config:              0xe7
+Preloader -     SBC enabled:            True
+Preloader -     SLA enabled:            True
+Preloader -     DAA enabled:            True
+Preloader -     SWJTAG enabled:         True
+Preloader -     EPP_PARAM at 0x600 after EMMC_BOOT/SDMMC_BOOT:  False
+Preloader -     Root cert required:     False
+Preloader -     Mem read auth:          True
+Preloader -     Mem write auth:         True
+Preloader -     Cmd 0xC8 blocked:       True
+Preloader - Get Target info
+Preloader - BROM mode detected.
+Preloader -     HW subcode:             0x8a00
+Preloader -     HW Ver:                 0xca00
+Preloader -     SW Ver:                 0x0
+Preloader - ME_ID:                      deadbeefdeadbeefdeadbeefdeadbeef
+Preloader - SOC_ID:                     deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef

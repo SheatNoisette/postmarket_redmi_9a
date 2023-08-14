@@ -11,6 +11,9 @@ Please note this is a work in progress and may not be complete!
 This project may be abandoned at any time, I'm not sure I'll be able to
 complete it.
 
+Status: Impossible to boot the kernel, the bootloader is not loading the
+kernel image correctly. Any recovery flashed (TWRP, OrangeFox) is not booting.
+
 ## Technical research
 
 See the [Technical Specifications](SPECS.md) for more details. These are the
@@ -69,7 +72,7 @@ postmarketOS port:
 - [X] Dump partitions
 - [X] Dump boot.img
 - [X] Get offsets for boot.img
-- [ ] Build a kernel
+- [X] Build a kernel
 - [ ] Get a kernel Booting with proof of booting (UART, led flashing, etc)
 - [ ] Get the screen working (pmOS error rootfs not found)
 - [ ] Load the rootfs
