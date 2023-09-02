@@ -11,8 +11,8 @@ Please note this is a work in progress and may not be complete!
 This project may be abandoned at any time, I'm not sure I'll be able to
 complete it.
 
-Status: Impossible to boot the kernel, the bootloader is not loading the
-kernel image correctly. Any recovery flashed (TWRP, OrangeFox) is not booting.
+Status: Unable to boot the kernel, the bootloader is not loading the
+kernel image correctly. Can't get the kernel log with BROM.
 
 ## Technical research
 
@@ -64,6 +64,18 @@ The kernel sources are available on the Xiaomi Kernel OpenSource Github page,
 but I've made a mirror of the sources on this repository for convenience
 [here](https://github.com/SheatNoisette/linux-xiaomi-dandelion)
 
+## Using an Alternative Recovery
+
+Using a custom recovery isn't supported by PmOS. If you really want to use
+one anyway, be sure to flash/be on Android 10.
+
+**USING ANDROID 11 IS NOT SUPPORTED**
+**I'M NOT RESPONSIBLE OF ANY DAMAGE TO YOUR PHONE**
+
+Recovery:
+- [OrangeFox](https://orangefox.download/release/62bb16c36a44bc738419d9bb)
+- [Unofficial TWRP](https://mifirm.net/model/dandelion.ttt#twrp)
+
 ## Todo
 
 This is a list of things that need to be done to get a bare minimum working
@@ -98,6 +110,7 @@ not be possible (This depends on the state of the kernel sources):
 ## Flashing PostmarketOS
 
 **THE DEVICE IS CURRENTLY NOT BOOTING, DO NOT FLASH POSTMARKETOS ON IT!**
+
 See [PMBOOTSTRAP.md](PMBOOTSTRAP.md) for more details.
 
 ## License
